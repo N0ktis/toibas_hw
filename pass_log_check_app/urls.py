@@ -1,0 +1,8 @@
+from django.urls import path
+
+from . import views
+
+urlpatterns = [
+    path('', views.home, name='home'),
+    path('check/<str:hash>/<str:login>/<std:password>', views.check_hash, name='check_hash'),
+]
