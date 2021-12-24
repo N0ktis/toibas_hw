@@ -4,7 +4,7 @@ from .models import Passwords, Logins
 from django.http import HttpResponse
 
 def home(request):
-    return HttpResponse
+    return HttpResponse('HELLO')
 
 
 def check_hash(request, hash_type, login, password):
