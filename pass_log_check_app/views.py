@@ -2,6 +2,9 @@ from django.db.models import Q
 
 from .models import Passwords, Logins
 
+def home(request):
+    return
+
 
 def check_hash(request, hash_type, login, password):
     if hash_type == 'sha256':
