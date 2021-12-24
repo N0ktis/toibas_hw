@@ -1,9 +1,10 @@
 from django.db.models import Q
 
 from .models import Passwords, Logins
+from django.http import HttpResponse
 
 def home(request):
-    return
+    return HttpResponse
 
 
 def check_hash(request, hash_type, login, password):
