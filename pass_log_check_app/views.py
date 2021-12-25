@@ -13,6 +13,8 @@ def home(request):
 
 
 def check_hash(request, hash_type, login, password):
+    if len(login) <= 4 or len(password) <= 4:
+        return JsonResponse({'logins': [], 'passwords': []})
     if hash_type == 'sha256':
         passwords = Passwords.objects.filter(Q(sha256__startswith=password))
         logins = Logins.objects.filter(Q(sha256__startswith=login))
@@ -33,4 +35,9 @@ def check_hash(request, hash_type, login, password):
         logins = Logins.objects.filter(Q(keccak256__startswith=login))
     logins_list = get_list_from_objects(logins, hash_type)
     passwords_list = get_list_from_objects(passwords, hash_type)
-    return JsonResponse({'logins': logins_list, 'passwords': passwords_list})
+    if login == '?':
+        return JsonResponse({'passwords': passwords_list})
+    elif password == '?':
+        return JsonResponse({'logins': logins_list})
+    else:
+        return JsonResponse({'logins': logins_list, 'passwords': passwords_list})
