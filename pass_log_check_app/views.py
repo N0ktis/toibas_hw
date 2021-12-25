@@ -1,7 +1,12 @@
 from django.db.models import Q
+from django.http import HttpResponse, JsonResponse
 
 from .models import Passwords, Logins
-from django.http import HttpResponse
+
+
+def get_list_from_objects(query_set, attribute_name):
+    return [getattr(data_object, attribute_name) for data_object in query_set]
+
 
 def home(request):
     return HttpResponse('HELLO')
@@ -9,25 +14,23 @@ def home(request):
 
 def check_hash(request, hash_type, login, password):
     if hash_type == 'sha256':
-        passwords = Passwords.objects.get(Q(sha256__startswith=password))
-        logins = Logins.objects.get(Q(sha256__startswith=login))
+        passwords = Passwords.objects.filter(Q(sha256__startswith=password))
+        logins = Logins.objects.filter(Q(sha256__startswith=login))
     elif hash_type == 'sha512':
-        passwords = Passwords.objects.get(Q(sha512__startswith=password))
-        logins = Logins.objects.get(Q(sha512__startswith=login))
+        passwords = Passwords.objects.filter(Q(sha512__startswith=password))
+        logins = Logins.objects.filter(Q(sha512__startswith=login))
     elif hash_type == 'md4':
-        passwords = Passwords.objects.get(Q(md4__startswith=password))
-        logins = Logins.objects.get(Q(md4__startswith=login))
+        passwords = Passwords.objects.filter(Q(md4__startswith=password))
+        logins = Logins.objects.filter(Q(md4__startswith=login))
     elif hash_type == 'md5':
-        passwords = Passwords.objects.get(Q(md5__startswith=password))
-        logins = Logins.objects.get(Q(md5__startswith=login))
+        passwords = Passwords.objects.filter(Q(md5__startswith=password))
+        logins = Logins.objects.filter(Q(md5__startswith=login))
     elif hash_type == 'crc32':
-        passwords = Passwords.objects.get(Q(crc32__startswith=password))
-        logins = Logins.objects.get(Q(crc32__startswith=login))
+        passwords = Passwords.objects.filter(Q(crc32__startswith=password))
+        logins = Logins.objects.filter(Q(crc32__startswith=login))
     elif hash_type == 'keccak256':
-        passwords = Passwords.objects.get(Q(keccak256__startswith=password))
-        logins = Logins.objects.get(Q(keccak256__startswith=login))
-    else:
-        return None
-    print(logins)
-    print(passwords)
-    return None
+        passwords = Passwords.objects.filter(Q(keccak256__startswith=password))
+        logins = Logins.objects.filter(Q(keccak256__startswith=login))
+    logins_list = get_list_from_objects(logins, hash_type)
+    passwords_list = get_list_from_objects(passwords, hash_type)
+    return JsonResponse({'logins': logins_list, 'passwords': passwords_list})
