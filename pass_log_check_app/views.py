@@ -1,5 +1,6 @@
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
 
 from .models import Passwords, Logins
 
@@ -11,11 +12,11 @@ def get_list_from_objects(query_set, attribute_name):
 
 
 def home(request):
-    return HttpResponse('HELLO')
+    #return HttpResponse('HELLO')
+    return render(request, 'pass_log_check_app/Home _ My Site 7.html')
 
 
 def check_raw_url(request):
-    # body_unicode = request.GET.body.decode('utf-8')
     get_request_keys = request.GET.keys()
     if 'hash_type' not in get_request_keys:
         return HttpResponse('No hash type')
