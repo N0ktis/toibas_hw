@@ -13,7 +13,7 @@ import os.path
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-import django_heroku
+# import django_heroku
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,9 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-b(ck(cf%_6^$sxcqa24u#bqkqp&^sg$0@)qbk$s9bvchtc1aox'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['pass-log-check.herokuapp.com']
+ALLOWED_HOSTS = ['pass-log-check.herokuapp.com',
+                 '127.0.0.1']
 
 # Application definition
 
@@ -76,10 +77,10 @@ WSGI_APPLICATION = 'pass_log_check.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'df7d1ofu76vedd',
-        'USER': 'windzyqutaesvb',
-        'PASSWORD': '0cfbf94cfc1d7b01046803000fbda6406d0f4b5276bd89a8dcedf43d90ee6149',
-        'HOST': 'ec2-34-255-225-151.eu-west-1.compute.amazonaws.com',
+        'NAME': 'pass_check',
+        'USER': 'postgres',
+        'PASSWORD': '317a251',
+        'HOST': '127.0.0.1',
         'PORT': '5432',
     }
 }
@@ -118,7 +119,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
